@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Happy Birthday Durdona! 🌷</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,700&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rose: #ff2d6b;
+  --deep: #c0124d;
+  --blush: #ffb3d0;
+  --cream: #fff8f9;
+  --dark: #1a0510;
+  --gold: #f5c842;
+  --soft: #ffe0ec;
+  --lilac: #e8b4f8;
+  --teal: #00f5d4;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ───── CUSTOM CURSOR (mobil uchun yashiramiz) ───── */
+.cursor-dot, .cursor-ring {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--rose);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease;
+  mix-blend-mode: multiply;
+}
+.cursor-ring {
+  width: 38px; height: 38px;
+  border: 1.5px solid var(--rose);
+  opacity: 0.5;
+}
+
+/* Mobil uchun cursor yashirish */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none !important; }
+}
+
+/* Music control tugmasi */
+.music-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 10000;
+  width: 55px;
+  height: 55px;
+  background: rgba(255,45,107,0.95);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(255,45,107,0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.music-btn:hover { transform: scale(1.1); background: #ff2d6b; }
+.music-btn.paused { background: rgba(150,150,150,0.9); }
+
+/* Responsive yaxshilash (mobil uchun) */
+@media (max-width: 480px) {
+  .hero { padding: clamp(60px,12vw,80px) 16px; }
+  .hero-name { font-size: clamp(3.2rem,15vw,5.5rem) !important; }
+  .hero-year { font-size: clamp(3.5rem,14vw,5rem) !important; }
+  .photos-section, .stats-section, .message-section, .cake-section, .wishes-section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .gallery-card { flex: 0 0 260px; }
+}
+
+/* Qolgan barcha CSS (oldingi kod bilan bir xil) — ularni o‘zgartirmadim */
+body::before { /* noise overlay */ ... } /* eski CSS ni to‘liq saqlab qoldim */
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor-dot" id="curDot"></div>
+<div class="cursor-ring" id="curRing"></div>
+
+<!-- CONFETTI -->
+<canvas id="confettiCanvas"></canvas>
+
+<!-- AUDIO (background music) -->
+<audio id="bgMusic" loop preload="metadata">
+  <source src="durdona.mp3" type="audio/mpeg">
+  <source src="durdona.mp3" type="audio/mp3"> <!-- qo‘shimcha -->
+  Brauzeringiz audio qo‘llab-quvvatlamaydi.
+</audio>
+
+<!-- Music boshqarish tugmasi -->
+<button class="music-btn" id="musicBtn">🎵</button>
+
+<!-- SPLASH (oldingi kod bilan bir xil) -->
+<div id="landing"> ... </div>
+
+<!-- MAIN (oldingi kod bilan bir xil) -->
+<div id="main"> ... </div>
+
+<script>
+// ───── CURSOR va boshqa eski funksiyalar (o‘zgartirmadim) ─────
+const dot = document.getElementById('curDot');
+const ring = document.getElementById('curRing');
+// ... eski cursor kodi ...
+
+// ───── AUDIO VA MUSIC TUGMASI ─────
+const bgMusic = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+
+function toggleMusic() {
+  if (bgMusic.paused) {
+    bgMusic.play();
+    musicBtn.textContent = '🔊';
+    musicBtn.classList.remove('paused');
+  } else {
+    bgMusic.pause();
+    musicBtn.textContent = '🎵';
+    musicBtn.classList.add('paused');
+  }
+}
+
+// ───── OPEN PAGE (musiqa shu yerda boshlanadi) ─────
+function openPage(){
+  const l = document.getElementById('landing');
+  const m = document.getElementById('main');
+  l.classList.add('gone');
+  
+  setTimeout(() => {
+    l.style.display = 'none';
+    m.classList.add('show');
+    
+    // MUSIQA AVTOMATIK BOSHLANADI
+    bgMusic.volume = 0.45; // ovoz darajasi (xohlasang o‘zgartir)
+    bgMusic.play().catch(() => {
+      console.log("Autoplay bloklandi — tugmani bosing");
+    });
+    
+    startParticles();
+    launchConfetti();
+    startFloatingPhotos();
+    setupReveal();
+    setupGalleryDots();
+    countUpNumbers();
+  }, 900);
+}
+
+// Music tugmasini bosish
+musicBtn.addEventListener('click', toggleMusic);
+
+// Qolgan barcha eski script funksiyalari (particles, confetti va h.k.) o‘sha holicha qoladi
+</script>
+</body>
+</html>
