@@ -382,6 +382,16 @@ body {
   color:rgba(255,255,255,.75); font-size:clamp(.85rem,2.5vw,1rem);
   text-align:center; padding:0 20px; line-height:1.5;
 }
+/* Photo cards */
+.g-photo { padding:0; overflow:hidden; }
+.g-photo img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+.g-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(15,8,21,.85) 0%, transparent 55%);
+  display:flex; align-items:flex-end; padding:20px;
+}
+.g-photo .g-text { padding:0; color:rgba(255,255,255,.9); font-size:clamp(.82rem,2.4vw,.98rem); }
+
 .gallery-dots { display:flex; justify-content:center; gap:8px; margin-top:4px; padding:0 20px; }
 .g-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,107,157,.25); cursor:pointer; transition:all .3s; }
 .g-dot.on { background:var(--rose); width:20px; border-radius:3px; }
@@ -547,7 +557,7 @@ footer {
 #music-btn:hover { transform:scale(1.1); box-shadow:0 12px 40px rgba(255,107,157,.7); }
 #music-btn.playing { animation:fadeUp .8s 2.5s forwards, musicPulse 1.5s ease-in-out infinite 2.5s; }
 @keyframes musicPulse { 0%,100%{box-shadow:0 8px 30px rgba(255,107,157,.5)} 50%{box-shadow:0 8px 45px rgba(255,107,157,.85), 0 0 0 8px rgba(255,107,157,.1)} }
-#yt-frame { display:none; }
+#bg-audio { display:none; }
 
 /* ── CLICK BURST ── */
 .burst { position:fixed; pointer-events:none; z-index:999; }
@@ -587,7 +597,7 @@ footer {
 
 <!-- Music Player -->
 <button id="music-btn" onclick="toggleMusic()" title="Musiqani o'ynating">🎵</button>
-<iframe id="yt-frame" width="0" height="0" frameborder="0" allow="autoplay"></iframe>
+<audio id="bg-audio" src="durdona.mp3" loop preload="auto"></audio>
 
 <!-- ════════ SPLASH ════════ -->
 <div id="splash">
@@ -679,25 +689,21 @@ footer {
       <h2 class="sec-title reveal">Go'zal <em>Lahzalar</em></h2>
     </div>
     <div class="gallery-scroll" id="gallery">
-      <div class="g-card reveal">
-        <span class="g-emoji">🌷</span>
-        <p class="g-text">Har gul sening chiroying kabi ochilsin</p>
+      <div class="g-card g-photo reveal">
+        <img src="foto/photo_2026-04-13_21-06-26.jpg" alt="Durdona">
+        <div class="g-overlay"><p class="g-text">Har gul sening chiroying kabi ochilsin 🌷</p></div>
       </div>
-      <div class="g-card reveal">
-        <span class="g-emoji">🌸</span>
-        <p class="g-text">Hayot seni doim gullab-yashnagan ko'rsin</p>
+      <div class="g-card g-photo reveal">
+        <img src="foto/photo_2026-04-13_21-06-34.jpg" alt="Durdona">
+        <div class="g-overlay"><p class="g-text">Do'stlar bilan baxtli lahzalar 💕</p></div>
       </div>
-      <div class="g-card reveal">
-        <span class="g-emoji">✨</span>
-        <p class="g-text">Yulduzlar sening baxtingga porlaydi</p>
+      <div class="g-card g-photo reveal">
+        <img src="foto/photo_2026-04-13_21-06-38.jpg" alt="Durdona">
+        <div class="g-overlay"><p class="g-text">Sening kuling dunyo uchun nur ✨</p></div>
       </div>
-      <div class="g-card reveal">
-        <span class="g-emoji">💖</span>
-        <p class="g-text">Muhabbat va baxt har doim senga hamroh</p>
-      </div>
-      <div class="g-card reveal">
-        <span class="g-emoji">🎂</span>
-        <p class="g-text">Bu kunda barcha orzularing amalga oshsin</p>
+      <div class="g-card g-photo reveal">
+        <img src="foto/photo_2026-04-13_21-06-42.jpg" alt="Durdona">
+        <div class="g-overlay"><p class="g-text">Bu kunda barcha orzularing amalga oshsin 🎂</p></div>
       </div>
     </div>
     <div class="gallery-dots" id="galleryDots"></div>
@@ -953,8 +959,10 @@ document.head.appendChild(burstStyle);
 /* ══════ FLOATING PHOTOS ══════ */
 function startFloatingPhotos(){
   const imgs=[
-    'foto/foto1.jpg','foto/foto2.jpg','foto/foto3.jpg',
-    'foto/foto4.jpg','foto/foto5.jpg','foto/foto6.jpg'
+    'foto/photo_2026-04-13_21-06-26.jpg',
+    'foto/photo_2026-04-13_21-06-34.jpg',
+    'foto/photo_2026-04-13_21-06-38.jpg',
+    'foto/photo_2026-04-13_21-06-42.jpg'
   ];
   const positions=[
     {top:'8%',left:'2%',w:'clamp(80px,14vw,140px)',h:'clamp(100px,18vw,180px)'},
@@ -994,19 +1002,16 @@ function startFloatingPhotos(){
 /* ══════ MUSIC PLAYER ══════ */
 let musicPlaying=false;
 const btn=document.getElementById('music-btn');
-const frame=document.getElementById('yt-frame');
-
-// Romantic song: "A Thousand Years" - Christina Perri
-const SONG_ID='rtOvBOTyX00';
+const audio=document.getElementById('bg-audio');
 
 function toggleMusic(){
   if(!musicPlaying){
-    frame.src=`https://www.youtube.com/embed/${SONG_ID}?autoplay=1&loop=1&playlist=${SONG_ID}&controls=0`;
+    audio.play();
     btn.textContent='🎶';
     btn.classList.add('playing');
     musicPlaying=true;
   } else {
-    frame.src='';
+    audio.pause();
     btn.textContent='🎵';
     btn.classList.remove('playing');
     musicPlaying=false;
