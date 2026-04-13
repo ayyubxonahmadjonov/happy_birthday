@@ -808,6 +808,8 @@ function openPage(){
   const sp=document.getElementById('splash');
   const mn=document.getElementById('main');
   sp.classList.add('gone');
+  // Musiqa "Ochish" bosilganda boshlanadi (brauzer ruxsat beradi)
+  toggleMusic();
   setTimeout(()=>{
     sp.style.display='none';
     mn.classList.add('show');
