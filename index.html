@@ -853,12 +853,12 @@ function launchConfetti(){
   const resize=()=>{ canvas.width=innerWidth; canvas.height=innerHeight; };
   resize(); addEventListener('resize',resize);
   const cols=['#ff6b9d','#ffc4dc','#ffb347','#c084fc','#ff4da6','#e879f9','#fbbf24'];
-  const pieces=Array.from({length:160},()=>({
+  const pieces=Array.from({length:300},()=>({
     x:Math.random()*innerWidth,
-    y:-Math.random()*innerHeight*.5,
+    y:-Math.random()*innerHeight*3,
     w:5+Math.random()*8, h:7+Math.random()*7,
     rot:Math.random()*360, rotV:(Math.random()-.5)*7,
-    vx:(Math.random()-.5)*1.5, vy:0.6+Math.random()*1.8,
+    vx:(Math.random()-.5)*2, vy:1.5+Math.random()*3.5,
     col:cols[Math.floor(Math.random()*cols.length)],
     circle:Math.random()>.5
   }));
@@ -1006,7 +1006,7 @@ const audio=document.getElementById('bg-audio');
 
 function toggleMusic(){
   if(!musicPlaying){
-    audio.playbackRate=0.85;
+    audio.playbackRate=0.90;
     audio.play();
     btn.textContent='🎶';
     btn.classList.add('playing');
