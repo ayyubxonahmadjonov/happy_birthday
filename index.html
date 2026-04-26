@@ -268,10 +268,10 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
 .fpho{position:fixed;border-radius:14px;overflow:hidden;pointer-events:none;z-index:1;border:2px solid rgba(255,255,255,.12);box-shadow:0 12px 40px rgba(0,0,0,.3);animation:fpF ease-in-out infinite alternate,fpO ease-in-out infinite;opacity:0;will-change:transform,opacity}
 @keyframes fpO-mob{0%,100%{opacity:.55}50%{opacity:.7}}
 @media(max-width:700px){
-  .fpho{animation-name:fpF,fpO-mob !important;animation-delay:0s,0s !important;width:52px !important;height:68px !important}
-  .fpho:nth-child(2){width:46px !important;height:60px !important}
-  .fpho:nth-child(3){width:50px !important;height:65px !important}
-  .fpho:nth-child(4){width:44px !important;height:57px !important}
+  .fpho{animation-name:fpF,fpO-mob !important;animation-delay:0s,0s !important;width:78px !important;height:104px !important}
+  .fpho:nth-child(2){width:70px !important;height:93px !important}
+  .fpho:nth-child(3){width:74px !important;height:98px !important}
+  .fpho:nth-child(4){width:68px !important;height:90px !important}
 }
 @keyframes fpF{from{transform:translateY(0) rotate(var(--r)) scale(1)}to{transform:translateY(var(--d)) rotate(calc(var(--r) + var(--rd))) scale(var(--s))}}
 @keyframes fpO{0%,100%{opacity:0}15%,85%{opacity:var(--a)}}
@@ -379,14 +379,15 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
       </div>
       <div class="h-year">2026</div>
       <p class="h-sub">Happy Birthday 🌷</p>
+      <p style="font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:rgba(255,107,157,.45);margin-top:clamp(18px,4vw,28px);opacity:0;animation:fadeUp .8s .6s forwards">Hayotingizda o'tgan vaqt</p>
       <div class="age-counter" id="ageCounter">
-        <div class="age-unit"><div class="age-num" id="ageYears">25</div><div class="age-lbl">Yosh</div></div>
+        <div class="age-unit"><div class="age-num" id="ageYears">17</div><div class="age-lbl">Yosh</div></div>
         <div class="age-sep">✦</div>
-        <div class="age-unit"><div class="age-num" id="ageDays">0</div><div class="age-lbl">Kun</div></div>
+        <div class="age-unit"><div class="age-num" id="ageMonths">0</div><div class="age-lbl">Oylar</div></div>
         <div class="age-sep">✦</div>
-        <div class="age-unit"><div class="age-num" id="ageHours">0</div><div class="age-lbl">Soat</div></div>
+        <div class="age-unit"><div class="age-num" id="ageDays">0</div><div class="age-lbl">Kunlar</div></div>
         <div class="age-sep">✦</div>
-        <div class="age-unit"><div class="age-num" id="ageMins">0</div><div class="age-lbl">Daqiqa</div></div>
+        <div class="age-unit"><div class="age-num" id="ageHours">0</div><div class="age-lbl">Soatlar</div></div>
       </div>
       <div class="h-emojis">
         <span>💖</span><span>🌸</span><span>✨</span>
@@ -728,16 +729,17 @@ function startAgeCounter(){
   const bday=new Date('2009-04-27T00:00:00');
   function update(){
     const now=new Date();
-    const diff=now-bday;
-    const years=Math.floor(diff/(1000*60*60*24*365.25));
-    const sinceLastBday=now-new Date(`${now.getFullYear()}-04-27`);
-    const days=Math.floor(sinceLastBday/(1000*60*60*24));
-    const hours=now.getHours();
-    const mins=now.getMinutes();
+    const diffMs=now-bday;
+    const totalDays=Math.floor(diffMs/(1000*60*60*24));
+    const totalMonths=Math.floor(totalDays/30.44);
+    const totalHours=Math.floor(diffMs/(1000*60*60));
+    // Years: exact
+    let years=now.getFullYear()-bday.getFullYear();
+    if(now.getMonth()<bday.getMonth()||(now.getMonth()===bday.getMonth()&&now.getDate()<bday.getDate())) years--;
     document.getElementById('ageYears').textContent=years;
-    document.getElementById('ageDays').textContent=days<0?0:days;
-    document.getElementById('ageHours').textContent=hours;
-    document.getElementById('ageMins').textContent=mins;
+    document.getElementById('ageMonths').textContent=totalMonths.toLocaleString();
+    document.getElementById('ageDays').textContent=totalDays.toLocaleString();
+    document.getElementById('ageHours').textContent=totalHours.toLocaleString();
   }
   update();
   setInterval(update,60000);
