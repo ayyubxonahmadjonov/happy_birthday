@@ -148,33 +148,19 @@ body{font-family:'Inter',sans-serif;background:var(--dark);overflow-x:hidden;cur
 .marq-track .dot{color:rgba(255,255,255,.4);padding:0 4px}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ── KEN BURNS SLIDESHOW ── */
-.kb-section{position:relative;z-index:3;height:100svh;overflow:hidden}
-.kb-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.5s ease-in-out}
-.kb-slide.active{opacity:1}
-.kb-slide img{width:100%;height:100%;object-fit:cover;object-position:top center;animation:none}
-.kb-slide.active img{animation:kenBurns 8s ease-out forwards}
-@keyframes kenBurns{
-  0%  {transform:scale(1.12) translate(1%,1%)}
-  100%{transform:scale(1)    translate(-1%,-1%)}
-}
-.kb-slide:nth-child(2).active img{animation:kenBurns2 8s ease-out forwards}
-@keyframes kenBurns2{0%{transform:scale(1.1) translate(-2%,0%)}100%{transform:scale(1) translate(2%,0%)}}
-.kb-slide:nth-child(3).active img{animation:kenBurns3 8s ease-out forwards}
-@keyframes kenBurns3{0%{transform:scale(1.15) translate(0%,-2%)}100%{transform:scale(1) translate(0%,2%)}}
-.kb-slide:nth-child(4).active img{animation:kenBurns4 8s ease-out forwards}
-@keyframes kenBurns4{0%{transform:scale(1.1) translate(2%,1%)}100%{transform:scale(1) translate(-2%,-1%)}}
-.kb-slide:nth-child(5).active img{animation:kenBurns 8s ease-out forwards}
-
-.kb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,3,15,.85) 0%,rgba(6,3,15,.2) 50%,rgba(6,3,15,.1) 100%);z-index:1}
-.kb-content{position:absolute;bottom:clamp(40px,8vw,80px);left:clamp(24px,6vw,80px);z-index:2;max-width:500px}
-.kb-num{font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;color:rgba(255,107,157,.65);margin-bottom:12px;display:block;opacity:0;transform:translateX(-20px);transition:all .8s .3s cubic-bezier(.22,1,.36,1)}
-.kb-slide.active .kb-num{opacity:1;transform:translateX(0)}
-.kb-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.5rem,5vw,2.8rem);color:#fff;line-height:1.3;opacity:0;transform:translateY(20px);transition:all .9s .5s cubic-bezier(.22,1,.36,1)}
-.kb-slide.active .kb-title{opacity:1;transform:translateY(0)}
-.kb-dots{position:absolute;bottom:clamp(24px,4vw,40px);right:clamp(24px,5vw,60px);z-index:2;display:flex;gap:10px}
-.kb-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .4s cubic-bezier(.22,1,.36,1)}
-.kb-dot.on{background:var(--rose);width:24px;border-radius:3px}
+/* ── 3D CAROUSEL ── */
+.car-section{position:relative;z-index:3;min-height:90svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(22px,4vw,38px);overflow:hidden;padding:clamp(60px,10vw,100px) 0 clamp(50px,8vw,80px)}
+.car-bg-glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(255,107,157,.09) 0%,transparent 70%);pointer-events:none}
+.car-viewport{perspective:1400px;width:100%;height:clamp(300px,58vw,450px);display:flex;align-items:center;justify-content:center}
+.car-stage{width:clamp(190px,38vw,310px);height:clamp(268px,54vw,420px);position:relative;transform-style:preserve-3d}
+.car-panel{position:absolute;inset:0;border-radius:20px;overflow:hidden;border:1.5px solid rgba(255,255,255,.12);box-shadow:0 24px 70px rgba(0,0,0,.55);cursor:pointer;will-change:transform,opacity}
+.car-panel img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform .6s ease}
+.car-panel.car-front img{transform:scale(1.03)}
+.car-panel-sheen{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 55%);pointer-events:none}
+.car-caption{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.05rem,3.2vw,1.6rem);color:rgba(255,214,230,.78);text-align:center;padding:0 clamp(24px,6vw,80px);min-height:2.4em;transition:opacity .35s,transform .35s}
+.car-dots{display:flex;gap:10px}
+.car-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:all .4s cubic-bezier(.22,1,.36,1)}
+.car-dot.on{background:var(--rose);width:24px;border-radius:3px}
 
 /* ── PHOTO STRIP ── */
 .photo-section{position:relative;z-index:3;padding:clamp(70px,12vw,110px) 0}
@@ -280,7 +266,13 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
 
 /* ── FLOATING PHOTOS ── */
 .fpho{position:fixed;border-radius:14px;overflow:hidden;pointer-events:none;z-index:1;border:2px solid rgba(255,255,255,.12);box-shadow:0 12px 40px rgba(0,0,0,.3);animation:fpF ease-in-out infinite alternate,fpO ease-in-out infinite;opacity:0;will-change:transform,opacity}
-@media(max-width:700px){.fpho{display:none}}
+@keyframes fpO-mob{0%,100%{opacity:.55}50%{opacity:.7}}
+@media(max-width:700px){
+  .fpho{animation-name:fpF,fpO-mob !important;animation-delay:0s,0s !important;width:52px !important;height:68px !important}
+  .fpho:nth-child(2){width:46px !important;height:60px !important}
+  .fpho:nth-child(3){width:50px !important;height:65px !important}
+  .fpho:nth-child(4){width:44px !important;height:57px !important}
+}
 @keyframes fpF{from{transform:translateY(0) rotate(var(--r)) scale(1)}to{transform:translateY(var(--d)) rotate(calc(var(--r) + var(--rd))) scale(var(--s))}}
 @keyframes fpO{0%,100%{opacity:0}15%,85%{opacity:var(--a)}}
 .fpho img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
@@ -302,8 +294,7 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
 @media(max-width:768px){
   #music-btn{bottom:90px;right:16px}
   footer{padding-bottom:100px}
-  .kb-section{height:65svh}
-  .kb-content{left:16px;right:16px;bottom:28px;max-width:100%}
+  .car-section{min-height:auto;padding:50px 0 40px}
   .photo-strip{padding-left:16px;padding-right:16px}
   /* Floating rasmlar mobileda kichikroq */
   .fpho{border-radius:10px;border-width:1.5px}
@@ -423,56 +414,25 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
     </div>
   </div>
 
-  <!-- KEN BURNS SLIDESHOW -->
-  <section class="kb-section" id="kbSection">
-    <div class="kb-slide" id="kb0">
-      <img src="foto/durdona.jpg" alt="">
-      <div class="kb-overlay"></div>
-      <div class="kb-content">
-        <span class="kb-num">01 — Durdona</span>
-        <h2 class="kb-title">Har kuni yangi yutuqlarga intil</h2>
-      </div>
+  <!-- 3D PHOTO CAROUSEL -->
+  <section class="car-section" id="carSection">
+    <div class="car-bg-glow"></div>
+    <div class="sec-head">
+      <span class="sec-tag reveal">✦ Xotiralar ✦</span>
+      <h2 class="sec-title reveal">Go'zal <em>Lahzalar</em></h2>
     </div>
-    <div class="kb-slide" id="kb1">
-      <img src="foto/photo_2026-04-13_21-06-26.jpg" alt="">
-      <div class="kb-overlay"></div>
-      <div class="kb-content">
-        <span class="kb-num">02 — Xotira</span>
-        <h2 class="kb-title">Har gul sening chiroying kabi ochilsin</h2>
-      </div>
+    <div class="car-viewport">
+      <div class="car-stage" id="carStage"></div>
     </div>
-    <div class="kb-slide" id="kb2">
-      <img src="foto/photo_2026-04-13_21-06-34.jpg" alt="">
-      <div class="kb-overlay"></div>
-      <div class="kb-content">
-        <span class="kb-num">03 — Do'stlar</span>
-        <h2 class="kb-title">Do'stlar bilan baxtli lahzalar</h2>
-      </div>
-    </div>
-    <div class="kb-slide" id="kb3">
-      <img src="foto/photo_2026-04-13_21-06-38.jpg" alt="">
-      <div class="kb-overlay"></div>
-      <div class="kb-content">
-        <span class="kb-num">04 — Chiroyli</span>
-        <h2 class="kb-title">Sening kuling dunyo uchun nur</h2>
-      </div>
-    </div>
-    <div class="kb-slide" id="kb4">
-      <img src="foto/photo_2026-04-13_21-06-42.jpg" alt="">
-      <div class="kb-overlay"></div>
-      <div class="kb-content">
-        <span class="kb-num">05 — Baxt</span>
-        <h2 class="kb-title">Bu kunda barcha orzularing amalga oshsin</h2>
-      </div>
-    </div>
-    <div class="kb-dots" id="kbDots"></div>
+    <p class="car-caption" id="carCaption">Har kuni yangi yutuqlarga intil</p>
+    <div class="car-dots" id="carDots"></div>
   </section>
 
   <!-- PHOTO STRIP -->
   <section class="photo-section">
     <div class="sec-head">
-      <span class="sec-tag reveal">✦ Xotiralar ✦</span>
-      <h2 class="sec-title reveal">Go'zal <em>Lahzalar</em></h2>
+      <span class="sec-tag reveal">✦ Rasmlar ✦</span>
+      <h2 class="sec-title reveal">Maxsus <em>Onlar</em></h2>
     </div>
     <div class="photo-strip" id="photoStrip">
       <div class="ph-card"><img src="foto/durdona.jpg" alt=""><div class="ph-shine"></div><div class="ph-overlay"></div><div class="ph-label"><span class="ph-num">01 — Durdona</span><p class="ph-text">Har kuni yangi yutuqlarga intil</p></div></div>
@@ -586,7 +546,7 @@ function openPage(){
     startFloatingPhotos();
     setupReveal();
     setupPhDots();
-    setupKenBurns();
+    setupCarousel();
     countUp();
     setup3DTilt();
     startAgeCounter();
@@ -783,32 +743,87 @@ function startAgeCounter(){
   setInterval(update,60000);
 }
 
-/* ════════════════ KEN BURNS ════════════════ */
-function setupKenBurns(){
-  const slides=document.querySelectorAll('.kb-slide');
-  const wrap=document.getElementById('kbDots');
-  let cur=0;
-  slides.forEach((_,i)=>{
-    const d=document.createElement('div');
-    d.className='kb-dot'+(i===0?' on':'');
-    d.onclick=()=>goSlide(i);
-    wrap.appendChild(d);
-  });
-  function goSlide(n){
-    slides[cur].classList.remove('active');
-    wrap.querySelectorAll('.kb-dot')[cur].classList.remove('on');
-    cur=n;
-    slides[cur].classList.add('active');
-    wrap.querySelectorAll('.kb-dot')[cur].classList.add('on');
-  }
-  slides[0].classList.add('active');
-  setInterval(()=>goSlide((cur+1)%slides.length),6000);
+/* ════════════════ 3D CAROUSEL ════════════════ */
+function setupCarousel(){
+  const DATA=[
+    {src:'foto/durdona.jpg',cap:'Har kuni yangi yutuqlarga intil'},
+    {src:'foto/photo_2026-04-13_21-06-26.jpg',cap:"Har gul sening chiroying kabi ochilsin"},
+    {src:'foto/photo_2026-04-13_21-06-34.jpg',cap:"Do'stlar bilan baxtli lahzalar"},
+    {src:'foto/photo_2026-04-13_21-06-38.jpg',cap:'Sening kuling dunyo uchun nur'},
+    {src:'foto/photo_2026-04-13_21-06-42.jpg',cap:'Bu kunda barcha orzularing amalga oshsin'},
+  ];
+  const N=DATA.length,STEP=360/N;
+  const stage=document.getElementById('carStage');
+  const dotsEl=document.getElementById('carDots');
+  const capEl=document.getElementById('carCaption');
 
-  // Observe to start slideshow
-  const io=new IntersectionObserver(en=>{
-    en.forEach(e=>{ if(e.isIntersecting) slides[0].classList.add('active'); });
-  },{threshold:.3});
-  io.observe(document.getElementById('kbSection'));
+  const panels=DATA.map((d,i)=>{
+    const el=document.createElement('div');
+    el.className='car-panel';
+    el.innerHTML=`<img src="${d.src}" alt="" loading="lazy"><div class="car-panel-sheen"></div>`;
+    el.addEventListener('click',()=>rotateTo(i));
+    stage.appendChild(el);return el;
+  });
+  const dots=DATA.map((_,i)=>{
+    const d=document.createElement('div');
+    d.className='car-dot'+(i===0?' on':'');
+    d.addEventListener('click',()=>rotateTo(i));
+    dotsEl.appendChild(d);return d;
+  });
+
+  let curRot=0,targetRot=0,activeIdx=0,autoTimer;
+
+  function getR(){
+    const w=stage.offsetWidth||250;
+    return Math.round((w/2)/Math.tan(Math.PI/N))+25;
+  }
+  function layout(){
+    const r=getR();
+    panels.forEach((p,i)=>{
+      const a=i*STEP+curRot;
+      p.style.transform=`rotateY(${a}deg) translateZ(${r}px)`;
+      const norm=(((-a%360)+360)%360);
+      const dist=Math.min(norm,360-norm);
+      p.style.opacity=0.3+(1-dist/180)*0.7;
+      p.classList.toggle('car-front',dist<25);
+    });
+  }
+  function setCaption(idx){
+    capEl.style.opacity='0';capEl.style.transform='translateY(8px)';
+    setTimeout(()=>{capEl.textContent=DATA[idx].cap;capEl.style.opacity='1';capEl.style.transform='translateY(0)';},260);
+  }
+  function rotateTo(idx){
+    clearTimeout(autoTimer);
+    const diff=((idx-activeIdx+N)%N);
+    const steps=diff<=N/2?-diff:N-diff;
+    targetRot+=steps*STEP;
+    dots[activeIdx].classList.remove('on');
+    activeIdx=idx;
+    dots[activeIdx].classList.add('on');
+    setCaption(idx);
+    autoTimer=setTimeout(autoStep,3200);
+  }
+  function autoStep(){
+    const next=(activeIdx+1)%N;
+    targetRot-=STEP;
+    dots[activeIdx].classList.remove('on');
+    activeIdx=next;
+    dots[activeIdx].classList.add('on');
+    setCaption(next);
+    autoTimer=setTimeout(autoStep,3200);
+  }
+  (function loop(){curRot+=(targetRot-curRot)*.065;layout();requestAnimationFrame(loop);})();
+
+  // Touch swipe
+  let tx0=0;
+  stage.addEventListener('touchstart',e=>{tx0=e.touches[0].clientX;},{passive:true});
+  stage.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-tx0;
+    if(Math.abs(dx)>40) rotateTo(dx<0?(activeIdx+1)%N:(activeIdx-1+N)%N);
+  },{passive:true});
+
+  autoTimer=setTimeout(autoStep,3200);
+  layout();
 }
 
 /* ════════════════ PHOTO DOTS ════════════════ */
