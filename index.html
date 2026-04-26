@@ -294,136 +294,18 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
 @keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.6);opacity:1}}
 @keyframes burstPop{from{opacity:1;transform:translate(0,0) scale(.4)}to{opacity:0;transform:translate(var(--tx),var(--ty)) scale(1.2)}}
 
-/* ═══════════════════════════════════
-   MOBILE RESPONSIVE
-═══════════════════════════════════ */
-
-/* Touch: cursor yo'q */
-@media (hover:none),(pointer:coarse){
+/* ── MOBILE: minimal tuzatishlar ── */
+@media(hover:none),(pointer:coarse){
   #c-dot,#c-ring{display:none}
   body{cursor:auto}
 }
-
-/* Floating photos — mobileda 2 ta kichik burchakda */
-@media(max-width:700px){
-  .fpho{display:block}
-  .fpho:nth-child(1){
-    width:70px!important;height:90px!important;
-    top:auto!important;bottom:110px!important;
-    left:10px!important;right:auto!important;
-  }
-  .fpho:nth-child(2){
-    width:60px!important;height:78px!important;
-    top:auto!important;bottom:200px!important;
-    left:10px!important;right:auto!important;
-  }
-  .fpho:nth-child(3){
-    width:70px!important;height:90px!important;
-    top:auto!important;bottom:110px!important;
-    right:10px!important;left:auto!important;
-  }
-  .fpho:nth-child(4){
-    width:60px!important;height:78px!important;
-    top:auto!important;bottom:200px!important;
-    right:10px!important;left:auto!important;
-  }
-}
-
 @media(max-width:768px){
-  /* SPLASH */
-  .sp-card{padding:36px 24px;border-radius:28px}
-  .gift-scene{width:100px;height:100px}
-  .gift-box{width:100px;height:100px}
-  .gf{width:100px;height:100px}
-  .gf-f{transform:translateZ(50px)}
-  .gf-b{transform:rotateY(180deg) translateZ(50px)}
-  .gf-l{transform:rotateY(-90deg) translateZ(50px)}
-  .gf-r{transform:rotateY(90deg) translateZ(50px)}
-  .gf-t{transform:rotateX(90deg) translateZ(50px)}
-  .gf-bt{transform:rotateX(-90deg) translateZ(50px)}
-
-  /* HERO */
-  .hero{padding:80px 16px 50px}
-  .h-tag{font-size:.5rem;letter-spacing:.5em;margin-bottom:16px}
-  .h-name{font-size:clamp(3.8rem,20vw,6rem)!important}
-  .h-year{font-size:clamp(2.5rem,14vw,5rem)!important}
-  .h-sub{font-size:clamp(.95rem,3vw,1.3rem)}
-  .age-counter{gap:10px;margin-top:18px}
-  .age-num{font-size:clamp(1.4rem,5vw,2rem)}
-  .age-sep{font-size:1.1rem}
-  .age-lbl{font-size:.48rem;letter-spacing:.3em}
-  .h-emojis{font-size:clamp(1.2rem,5vw,1.6rem);gap:8px;margin-top:18px}
-  .h-emojis span:nth-child(2){font-size:clamp(1.5rem,6vw,2rem)!important}
-  .hero-ring{display:none}
-  .scroll-hint{bottom:16px}
-
-  /* KEN BURNS */
-  .kb-section{height:60svh}
-  .kb-content{bottom:24px;left:16px;right:16px;max-width:100%}
-  .kb-title{font-size:clamp(1.2rem,4.5vw,1.8rem)!important}
-  .kb-dots{bottom:16px;right:16px}
-
-  /* PHOTO STRIP */
-  .photo-section{padding:50px 0}
-  .photo-strip{padding:16px 16px 20px;gap:14px}
-  .ph-card{flex:0 0 72vw;border-radius:20px}
-  .ph-card:nth-child(1),.ph-card:nth-child(2),
-  .ph-card:nth-child(3),.ph-card:nth-child(4),
-  .ph-card:nth-child(5){clip-path:inset(0 100% 0 0 round 20px);transform:translateX(-20px);filter:brightness(0)}
-  .ph-card.ph-in{clip-path:inset(0 0% 0 0% round 20px);transform:none;filter:brightness(.88)}
-  .ph-text{font-size:1rem}
-
-  /* MESSAGE */
-  .msg-section{padding:50px 16px}
-  .msg-box{padding:32px 22px;border-radius:24px}
-  .msg-quote{font-size:clamp(1.05rem,3.8vw,1.4rem)}
-
-  /* STATS */
-  .stats-section{padding:50px 16px}
-  .stats-grid{grid-template-columns:1fr 1fr;gap:12px}
-  .st-card{padding:22px 14px}
-  .st-num{font-size:clamp(1.8rem,6vw,2.4rem)}
-
-  /* CAKE */
-  .cake-section{padding:50px 16px}
-  .orbit{width:clamp(180px,55vw,280px);height:clamp(180px,55vw,280px);
-    margin-left:calc(clamp(180px,55vw,280px)/-2);
-    margin-top:calc(clamp(180px,55vw,280px)/-2)}
-  .o-i{transform-origin:0 calc(clamp(90px,27.5vw,140px))}
-
-  /* WISHES */
-  .wishes-section{padding:50px 16px}
-  .wishes-grid{grid-template-columns:1fr 1fr;gap:12px}
-  .w-card{padding:22px 16px;border-radius:20px}
-  .w-ico{font-size:1.8rem}
-  .w-title{font-size:1rem}
-  .w-text{font-size:.78rem}
-
-  /* MARQUEE */
-  .marq-track span{font-size:.52rem;padding:0 18px}
-
-  /* FOOTER */
-  footer{padding:40px 16px 100px}
-
-  /* MUSIC BTN — vizCanvas dan yuqorida */
-  #music-btn{bottom:96px;right:16px;width:48px;height:48px;font-size:1.2rem}
-
-  /* VIZ CANVAS */
-  #vizCanvas{height:64px}
-
-  /* SEC HEADS */
-  .sec-head{padding:0 16px}
-  .sec-title{font-size:clamp(1.6rem,6vw,2.4rem)}
-  .sec-tag{font-size:.5rem;letter-spacing:.5em}
-}
-
-@media(max-width:400px){
-  .h-name{font-size:clamp(3rem,18vw,4.5rem)!important}
-  .sp-title{font-size:clamp(1.6rem,7vw,2.2rem)}
-  .stats-grid{grid-template-columns:1fr 1fr}
-  .wishes-grid{grid-template-columns:1fr}
-  .age-counter{gap:6px}
-  .age-sep{display:none}
+  .fpho{display:none}
+  #music-btn{bottom:90px;right:16px}
+  footer{padding-bottom:100px}
+  .kb-section{height:65svh}
+  .kb-content{left:16px;right:16px;bottom:28px;max-width:100%}
+  .photo-strip{padding-left:16px;padding-right:16px}
 }
 </style>
 </head>
