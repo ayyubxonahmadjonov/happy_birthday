@@ -268,10 +268,11 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
 .fpho{position:fixed;border-radius:14px;overflow:hidden;pointer-events:none;z-index:1;border:2px solid rgba(255,255,255,.12);box-shadow:0 12px 40px rgba(0,0,0,.3);animation:fpF ease-in-out infinite alternate,fpO ease-in-out infinite;opacity:0;will-change:transform,opacity}
 @keyframes fpO-mob{0%,100%{opacity:.55}50%{opacity:.7}}
 @media(max-width:700px){
-  .fpho{animation-name:fpF,fpO-mob !important;animation-delay:0s,0s !important;width:78px !important;height:104px !important}
-  .fpho:nth-child(2){width:70px !important;height:93px !important}
-  .fpho:nth-child(3){width:74px !important;height:98px !important}
-  .fpho:nth-child(4){width:68px !important;height:90px !important}
+  /* Faqat yuqori 2 ta burchak rasmni ko'rsat, pastkilar content ustiga tushadi */
+  #fPhotos .fpho:nth-child(2),
+  #fPhotos .fpho:nth-child(4){display:none !important}
+  .fpho{animation-name:fpF,fpO-mob !important;animation-delay:0s,0s !important;width:80px !important;height:106px !important}
+  #fPhotos .fpho:nth-child(3){width:76px !important;height:101px !important}
 }
 @keyframes fpF{from{transform:translateY(0) rotate(var(--r)) scale(1)}to{transform:translateY(var(--d)) rotate(calc(var(--r) + var(--rd))) scale(var(--s))}}
 @keyframes fpO{0%,100%{opacity:0}15%,85%{opacity:var(--a)}}
@@ -296,8 +297,18 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
   footer{padding-bottom:100px}
   .car-section{min-height:auto;padding:50px 0 40px}
   .photo-strip{padding-left:16px;padding-right:16px}
-  /* Floating rasmlar mobileda kichikroq */
   .fpho{border-radius:10px;border-width:1.5px}
+}
+@media(max-width:480px){
+  .age-sep{display:none}
+  .age-counter{gap:6px 10px;margin-top:10px}
+  .age-num{font-size:1.1rem !important}
+  .age-lbl{font-size:.4rem;letter-spacing:.2em}
+  .age-sub-label{font-size:.5rem !important;letter-spacing:.35em !important;margin-top:10px !important}
+  .h-sub{font-size:.9rem;margin-top:6px}
+  .h-emojis{margin-top:14px;gap:6px}
+  .hero{padding-top:clamp(70px,14vw,100px);padding-bottom:clamp(30px,7vw,50px)}
+  .scroll-hint{display:none}
 }
 </style>
 </head>
@@ -379,7 +390,7 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
       </div>
       <div class="h-year">2026</div>
       <p class="h-sub">Happy Birthday 🌷</p>
-      <p style="font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:rgba(255,107,157,.45);margin-top:clamp(18px,4vw,28px);opacity:0;animation:fadeUp .8s .6s forwards">Hayotingizda o'tgan vaqt</p>
+      <p class="age-sub-label" style="font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:rgba(255,107,157,.45);margin-top:clamp(14px,3vw,24px);opacity:0;animation:fadeUp .8s .6s forwards">Hayotingizda o'tgan vaqt</p>
       <div class="age-counter" id="ageCounter">
         <div class="age-unit"><div class="age-num" id="ageYears">17</div><div class="age-lbl">Yosh</div></div>
         <div class="age-sep">✦</div>
