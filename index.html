@@ -27,8 +27,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark);overflow-x:hidden;cur
 #starCanvas{z-index:0}
 #petalCanvas{z-index:2}
 #fxCanvas{z-index:101}
-#vizCanvas{position:fixed;bottom:0;left:0;width:100%;height:80px;z-index:799;pointer-events:none;opacity:0;transition:opacity .5s}
-#vizCanvas.show{opacity:1}
 
 /* ── AURORA ── */
 .aurora{position:fixed;inset:0;z-index:1;overflow:hidden}
@@ -322,7 +320,6 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
 <canvas id="starCanvas"></canvas>
 <canvas id="petalCanvas"></canvas>
 <canvas id="fxCanvas"></canvas>
-<canvas id="vizCanvas"></canvas>
 
 <!-- AURORA -->
 <div class="aurora">
@@ -955,54 +952,23 @@ function startFloatingPhotos(){
   });
 }
 
-/* ════════════════ MUSIC + VISUALIZER ════════════════ */
-let mOn=false,audioCtx,analyser,dataArr;
+/* ════════════════ MUSIC ════════════════ */
+let mOn=false,audioCtx;
 const mBtn=document.getElementById('music-btn');
 const mAud=document.getElementById('bg-audio');
-const vizCv=document.getElementById('vizCanvas');
-const vizCtx=vizCv.getContext('2d');
-
-function initViz(){
-  if(audioCtx) return;
-  audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-  const src=audioCtx.createMediaElementSource(mAud);
-  analyser=audioCtx.createAnalyser();
-  analyser.fftSize=128;
-  src.connect(analyser);
-  analyser.connect(audioCtx.destination);
-  dataArr=new Uint8Array(analyser.frequencyBinCount);
-  vizCv.width=innerWidth;vizCv.height=80;
-  addEventListener('resize',()=>{vizCv.width=innerWidth});
-  drawViz();
-}
-function drawViz(){
-  if(!mOn){vizCtx.clearRect(0,0,vizCv.width,vizCv.height);requestAnimationFrame(drawViz);return;}
-  analyser.getByteFrequencyData(dataArr);
-  vizCtx.clearRect(0,0,vizCv.width,vizCv.height);
-  const bw=vizCv.width/dataArr.length;
-  dataArr.forEach((v,i)=>{
-    const h=v/255*65;
-    const x=i*bw;
-    const hue=320+i*1.5;
-    vizCtx.fillStyle=`hsla(${hue},90%,65%,.75)`;
-    vizCtx.beginPath();
-    vizCtx.roundRect(x+1,80-h,bw-2,h,3);
-    vizCtx.fill();
-  });
-  requestAnimationFrame(drawViz);
-}
 
 async function toggleMusic(){
   if(!mOn){
-    initViz();
-    if(audioCtx?.state==='suspended') await audioCtx.resume();
+    if(!audioCtx){
+      audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+      audioCtx.createMediaElementSource(mAud).connect(audioCtx.destination);
+    }
+    if(audioCtx.state==='suspended') await audioCtx.resume();
     mAud.playbackRate=0.95;
     await mAud.play().catch(()=>{});
-    mBtn.textContent='🎶';mBtn.classList.add('playing');
-    vizCv.classList.add('show');mOn=true;
+    mBtn.textContent='🎶';mBtn.classList.add('playing');mOn=true;
   } else {
-    mAud.pause();mBtn.textContent='🎵';mBtn.classList.remove('playing');
-    vizCv.classList.remove('show');mOn=false;
+    mAud.pause();mBtn.textContent='🎵';mBtn.classList.remove('playing');mOn=false;
   }
 }
 </script>
