@@ -136,9 +136,14 @@ body{font-family:'Inter',sans-serif;background:var(--dark);overflow-x:hidden;cur
 .h-emojis span:nth-child(5){animation-delay:.3s;font-size:clamp(1.8rem,5vw,2.4rem)}
 @keyframes hbeat{0%,100%{transform:scale(1)}25%{transform:scale(1.3) rotate(-5deg)}75%{transform:scale(1.2) rotate(5deg)}}
 
-.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(255,107,157,.3);font-size:.56rem;letter-spacing:.45em;text-transform:uppercase;opacity:0;animation:fadeUp .9s 2.5s forwards}
-.s-line{width:1px;height:42px;background:linear-gradient(to bottom,transparent,var(--rose));animation:lineDrop 1.8s ease-in-out infinite}
-@keyframes lineDrop{0%,100%{transform:scaleY(.5) translateY(-6px);opacity:.3}50%{transform:scaleY(1);opacity:1}}
+.scroll-hint{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp .9s 2.8s forwards;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.s-text{font-size:.52rem;letter-spacing:.55em;text-transform:uppercase;color:rgba(255,107,157,.5)}
+.s-chevrons{display:flex;flex-direction:column;align-items:center;gap:2px}
+.s-chevrons span{display:block;width:18px;height:18px;border-right:2px solid var(--rose);border-bottom:2px solid var(--rose);transform:rotate(45deg);opacity:0;animation:chevDrop 1.6s ease-in-out infinite}
+.s-chevrons span:nth-child(1){animation-delay:0s;opacity:.3}
+.s-chevrons span:nth-child(2){animation-delay:.18s;opacity:.55}
+.s-chevrons span:nth-child(3){animation-delay:.36s;opacity:.8}
+@keyframes chevDrop{0%,100%{transform:rotate(45deg) translateY(-4px);opacity:.2}50%{transform:rotate(45deg) translateY(4px);opacity:1}}
 
 /* ── MARQUEE ── */
 .marq-wrap{position:relative;z-index:3;overflow:hidden;padding:14px 0;background:linear-gradient(90deg,var(--deep),#e91e8c,var(--rose),#e91e8c,var(--deep));background-size:300% 100%;animation:gradS 8s linear infinite}
@@ -307,8 +312,7 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
   .age-sub-label{font-size:.6rem !important;letter-spacing:.4em !important;margin-top:14px !important}
   .h-sub{font-size:1.15rem !important;margin-top:10px}
   .h-emojis{margin-top:16px;gap:8px}
-  .hero{padding-top:clamp(70px,14vw,100px);padding-bottom:clamp(30px,7vw,50px)}
-  .scroll-hint{display:none}
+  .hero{padding-top:clamp(70px,14vw,100px);padding-bottom:clamp(50px,9vw,70px)}
 }
 </style>
 </head>
@@ -405,7 +409,12 @@ footer{position:relative;z-index:3;padding:clamp(50px,9vw,80px) 24px clamp(36px,
         <span>🌷</span><span>💕</span><span>🎂</span>
       </div>
     </div>
-    <div class="scroll-hint"><div class="s-line"></div>Pastga</div>
+    <div class="scroll-hint" onclick="document.querySelector('.marq-wrap').scrollIntoView({behavior:'smooth'})">
+      <span class="s-text">Pastga</span>
+      <div class="s-chevrons">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
   </section>
 
   <!-- MARQUEE -->
